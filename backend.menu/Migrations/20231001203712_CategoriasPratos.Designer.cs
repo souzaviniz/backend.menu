@@ -10,8 +10,8 @@ using backend.menu.Data;
 namespace backend.menu.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230929013616_PratosECategorias")]
-    partial class PratosECategorias
+    [Migration("20231001203712_CategoriasPratos")]
+    partial class CategoriasPratos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,16 +38,22 @@ namespace backend.menu.Migrations
             modelBuilder.Entity("backend.menu.Models.Prato", b =>
                 {
                     b.Property<int>("IdPrato")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("DescPrato")
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("IdCategoria")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(65,30)");
 
                     b.HasKey("IdPrato");
+
+                    b.HasIndex("IdCategoria");
 
                     b.ToTable("Pratos");
                 });
@@ -55,8 +61,8 @@ namespace backend.menu.Migrations
             modelBuilder.Entity("backend.menu.Models.Prato", b =>
                 {
                     b.HasOne("backend.menu.Models.Categoria", "Categoria")
-                        .WithMany("Prato")
-                        .HasForeignKey("IdPrato")
+                        .WithMany("Pratos")
+                        .HasForeignKey("IdCategoria")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -65,7 +71,7 @@ namespace backend.menu.Migrations
 
             modelBuilder.Entity("backend.menu.Models.Categoria", b =>
                 {
-                    b.Navigation("Prato");
+                    b.Navigation("Pratos");
                 });
 #pragma warning restore 612, 618
         }

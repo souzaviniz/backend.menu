@@ -61,7 +61,7 @@ namespace backend.menu.Migrations
                     b.HasOne("backend.menu.Models.Categoria", "Categoria")
                         .WithMany("Pratos")
                         .HasForeignKey("IdCategoria")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Categoria");

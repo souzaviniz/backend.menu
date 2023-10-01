@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.menu.Data;
+using backend.menu.Data.Dto;
 using backend.menu.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,16 +20,15 @@ public class PratoController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Prato> RecuperaPrato()
+    public IEnumerable<ReadPratoDto> RecuperaPrato()
     {
-        return _context.Pratos;
+        return _mapper.Map<List<ReadPratoDto>>(_context.Pratos) ;
     }
     
     [HttpPost]
     public CreatePratoDto AdicionaPrato([FromBody] CreatePratoDto pratoDto)
     {
-        var prato = _mapper.Map<Prato>(pratoDto);
-        _context.Add(prato);
+        _context.Add(_mapper.Map<Prato>(pratoDto));
         _context.SaveChanges();
         return pratoDto;
     }
